@@ -6,7 +6,9 @@
 ## Needs to have
 
 ### Frontend:
- - A working user interface that scales with window size
+ - A working user interface, one of the following:
+    - A 2d UI similar to that of ChatGPT
+    - A 3d space that allows for movement and teh AI in a fixed location that you can interact with
  - Customizible colors
  - Text to speech
 
@@ -17,6 +19,7 @@
 
 ## Nice to have
  - Image/Video support
+ - Text to speech and speech to text systems
  - The ability to import training data to see the results on the model
  - Saving past conversations
  - An error catching system that either resolves or logs errors when they are present
