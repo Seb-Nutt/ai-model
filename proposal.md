@@ -8,10 +8,10 @@
 - A visually appealing homepage
 - At least two simulations that compare the decision making results and effects with a control group and Alzheimer's group
 - At least one interactive simulation that involves the user
-- Multiple pages which describe research and findings surrounding the topic
+- Desciptions of research and findings surrounding the topic alongside the simulations
 
 ## Nice to have
  - Multiple interactive simulations
  - A search bar
  - Visually appealing simulations
- - 3d models
+ - An interactive 3d model of the brain that lets the user select different sections
