@@ -14,21 +14,30 @@ class BrainNode{
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
-  orbitControl();
+  
 }
 
-function draw() {
+function draw() { 
   background(0);
-  square(mouseX,mouseY,50);
   drawBrain();
 }
 
 
 function drawBrain(){
+  orbitControl();
   stroke(255);
-  beginShape(TRIANGLE_FAN);
-  vertex(width/2,height/2,-50);
-  vertex(width/2 + 50, height/2 + 50, 0);
-  vertex(50, height/2 + 500, 50);
+
+  
+  beginShape(TRIANGLE_STRIP);
+  for (let direction = 1; direction >= -1; direction -= 2){
+    //brain stem
+    fill(200);
+    vertex(40, height/4 + 75, 0);
+    vertex(50, height/4, 0*direction);
+    vertex(25, height/4, 25*direction);
+    vertex(-40, height/8, 0*direction);
+    vertex(-20, height/8, 100*direction);
+    vertex(100,height/8, 0);
+  }
   endShape(CLOSE);
 }
