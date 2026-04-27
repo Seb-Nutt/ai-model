@@ -6,8 +6,9 @@
 ## Needs to have
 
 - A visually appealing homepage
-- At least two simulations that compare the decision making results and effects with a control group and Alzheimer's group
-- At least one interactive simulation that involves the user
+- A simulation of the Iowa gambling task that the user observes which compares the process and results of a group with alzhiermers and a control group
+- 
+- A simulation of the prisoners dilemma that the user can interact with
 - Desciptions of research and findings surrounding the topic alongside the simulations
 
 ## Nice to have
