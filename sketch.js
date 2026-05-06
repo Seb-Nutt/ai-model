@@ -22,8 +22,9 @@ class BrainNode{
   }
 
   connect(otherNode){
+    //use a scale
+    scale(1,1,1);
     if (dist(this.x,this.y,this.z,otherNode.x,otherNode.y,otherNode.z) < this.NODE_CONNECTION_RANGE){
-      
       line(this.x,this.y,this.z,otherNode.x,otherNode.y,otherNode.z);
     }
   }
@@ -48,12 +49,12 @@ function setup() {
 
 
   for (node of nodePositions){
-    //create the nodes and classify thier region
-    brainNodes.push(new BrainNode(node[0]-150,node[1]+50,node[2], node[3]));
+    //create the nodes and classify their region
+    brainNodes.push(new BrainNode(node[0],node[1],node[2], node[3]));
 
     //Mirror the node if it is not centered
     if (node[2] !== 0){
-      brainNodes.push(new BrainNode(node[0]-150,node[1]+50,node[2]*-1, node[3]));
+      brainNodes.push(new BrainNode(node[0],node[1],node[2]*-1, node[3]));
     }
   }
 
@@ -67,7 +68,7 @@ function draw() {
 
 
 function drawBrain(){
-
+  rotationAngle %= 6;
   //rotate the brain if a lobe is not being selected
   if (selectingLobe){
     //rotate the brain back into position
@@ -78,7 +79,7 @@ function drawBrain(){
     rotateY(rotationAngle);
   }
   else{
-    rotationAngle+= 0.002;
+    rotationAngle += 0.002;
     rotateY(rotationAngle);
   }
 
