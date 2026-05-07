@@ -7,10 +7,13 @@
 
 let brainNodes = [];
 //keep adding colors
-let regionColors = [['grey'], ['red'], ['orange']];
+//ajust the last nodes
+let regionColors = [['grey'], ['red'], ['yellow'], ['green'], ['cyan'], ['blue']];
 let nodePositions;
 let rotationAngle = 0;
 let selectingLobe = false;
+const DEFAULT_WIDTH = 1912;
+const DEFAULT_HEIGHT = 948;
 
 class BrainNode{
   constructor(x,y,z,region) {
@@ -23,7 +26,7 @@ class BrainNode{
 
   connect(otherNode){
     //use a scale
-    scale(1,1,1);
+    
     if (dist(this.x,this.y,this.z,otherNode.x,otherNode.y,otherNode.z) < this.NODE_CONNECTION_RANGE){
       line(this.x,this.y,this.z,otherNode.x,otherNode.y,otherNode.z);
     }
@@ -37,7 +40,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
-
+  scale(width/DEFAULT_HEIGHT,height/DEFAULT_HEIGHT);
 
   //changing the string posisions into numbers
   for (let node = 0; node < nodePositions.length; node++){
@@ -72,7 +75,7 @@ function drawBrain(){
   //rotate the brain if a lobe is not being selected
   if (selectingLobe){
     //rotate the brain back into position
-    if (rotationAngle - 0.1 > 0){
+    if (rotationAngle > 0){
       rotationAngle -= 0.05;
     }
 
