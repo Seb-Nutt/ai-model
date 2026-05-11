@@ -6,15 +6,7 @@
 // - describe what you did to take this project "above and beyond"
 
 let brainNodes = [];
-let regionIDs = {
-  brainStem: 0,
-  cerebellum: 1,
-  occipital: 2,
-  parietal: 3,
-  frontal: 4,
-  temporal: 5
-};
-let regionColors = [['grey'], ['red'], ['yellow'], ['green'], ['cyan'], ['blue']];
+let regionColors;
 let regionNodes = [[],[],[],[],[],[]];
 let nodePositions;
 let rotationAngle = 0;
@@ -49,6 +41,8 @@ function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
   scale(width/DEFAULT_HEIGHT,height/DEFAULT_HEIGHT);
 
+  regionColors = [color(75), color(200,0,0), color(200,200,0), color(0,200,0), color(0,200,200), color(0,0,200)];
+
   //changing the string posisions into numbers
   for (let node = 0; node < nodePositions.length; node++){
     nodePositions[node] = nodePositions[node].split(" ");
@@ -78,18 +72,21 @@ function draw() {
 
 
 function drawBrain(){
+  const ROTATION_SPEED = 0.002;
+  const ALIGNMENT_SPEED = 0.05;
+
   rotationAngle %= 2*PI;
   //rotate the brain if a lobe is not being selected
   if (selectingLobe){
     //rotate the brain back into position
     if (rotationAngle > 0){
-      rotationAngle -= 0.05;
+      rotationAngle -= ALIGNMENT_SPEED;
     }
 
     rotateY(rotationAngle);
   }
   else{
-    rotationAngle += 0.002;
+    rotationAngle += ROTATION_SPEED;
     rotateY(rotationAngle);
   }
 
@@ -112,13 +109,7 @@ function drawBrain(){
     if (selectingLobe){
       
       for (let region = 0; region < regionNodes.length; region++){
-        //maybe add a way to determine the border
-        fill(regionColors[region]);
-        beginShape(TRIANGLE_STRIP);
-        for (let node of regionNodes[region]){
-          vertex(node[0],node[1],node[2]);
-        }
-        endShape(CLOSE);
+        console.log(withinRegion(region));
       }
     }
 
@@ -131,4 +122,16 @@ function keyPressed(){
   if (key === ' '){
     selectingLobe = !selectingLobe;
   }
+}
+
+function withinRegion(region){
+  //doesnt work right now, look at the demo on p5 website
+  for (let node of regionNodes[region]){
+    for (let otherNode of regionNodes[region]){
+      if ((node[0] < mouseX && mouseX < otherNode[0]) && (node[1] < mouseY && mouseY < otherNode[1])){
+        return true;
+      }
+    }   
+  }
+  return false;
 }
