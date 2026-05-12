@@ -26,7 +26,7 @@ class BrainNode{
   connect(otherNode){
     //use a scale
     
-    if (dist(this.x,this.y,this.z,otherNode.x,otherNode.y,otherNode.z) < this.NODE_CONNECTION_RANGE && (this.regionColor === otherNode.regionColor || !selectingLobe)){
+    if (dist(this.x,this.y,this.z,otherNode.x,otherNode.y,otherNode.z) < this.NODE_CONNECTION_RANGE && (this.regionColor === otherNode.regionColor || !selectingLobe) && (this.z >= 0 && otherNode.z >= 0 || !selectingLobe)){
       line(this.x,this.y,this.z,otherNode.x,otherNode.y,otherNode.z);
     }
   }
@@ -109,13 +109,23 @@ function drawBrain(){
     if (selectingLobe){
       
       for (let region = 0; region < regionNodes.length; region++){
-        console.log(withinRegion(region));
+        fill(regionColors[region]);
+        beginShape(TRIANGLE_FAN);
+        for (let node of regionNodes[region]){
+          vertex(node.x,node.y,node.z);
+        }
+        endShape(CLOSE);
       }
     }
 
   }
 
-
+  ellipse(mouseX-width/2, mouseY-height/2, 3, 3);
+  
+  // draw the x and y coordinate of your mouse in the middle of the canvas
+  // width and height are also p5.js system varibles. 
+  // width is the width of the canvas that you set in createCanvas
+  // height is the height of the canvas that you set in createCanvas
 }
 
 function keyPressed(){
@@ -124,14 +134,6 @@ function keyPressed(){
   }
 }
 
-function withinRegion(region){
-  //doesnt work right now, look at the demo on p5 website
-  for (let node of regionNodes[region]){
-    for (let otherNode of regionNodes[region]){
-      if ((node[0] < mouseX && mouseX < otherNode[0]) && (node[1] < mouseY && mouseY < otherNode[1])){
-        return true;
-      }
-    }   
-  }
-  return false;
+function mouseClicked(){
+  console.log(mouseX-width/2,mouseY-height/2);
 }
