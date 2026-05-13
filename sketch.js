@@ -8,6 +8,7 @@
 let brainNodes = [];
 let regionColors;
 let regionNodes = [[],[],[],[],[],[]];
+let regionBorderNodes = [[],[],[],[],[],[]];
 let nodePositions;
 let rotationAngle = 0;
 let selectingLobe = false;
@@ -62,6 +63,13 @@ function setup() {
       brainNodes.push(new BrainNode(node[0],node[1],node[2]*-1, node[3]));
       regionNodes[node[3]].push([node[0],node[1],node[2]*-1]);
     }
+
+    if (node[4] === 1){
+      regionBorderNodes[node[3]].push([node[0],node[1],node[2]]);
+      if (node[2] !== 0){
+        regionBorderNodes[node[3]].push([node[0],node[1],node[2]]);
+      }
+    }
   }
 }
 
@@ -107,12 +115,13 @@ function drawBrain(){
     }
 
     if (selectingLobe){
-      
+      // just make a button next to each section
       for (let region = 0; region < regionNodes.length; region++){
-        fill(regionColors[region]);
-        beginShape(TRIANGLE_FAN);
-        for (let node of regionNodes[region]){
-          vertex(node.x,node.y,node.z);
+        fill(regionColors[region],50);
+        stroke('white');
+        beginShape();
+        for (let node of regionBorderNodes[region]){
+          vertex(node[0],node[1],node[2]);
         }
         endShape(CLOSE);
       }
@@ -121,11 +130,6 @@ function drawBrain(){
   }
 
   ellipse(mouseX-width/2, mouseY-height/2, 3, 3);
-  
-  // draw the x and y coordinate of your mouse in the middle of the canvas
-  // width and height are also p5.js system varibles. 
-  // width is the width of the canvas that you set in createCanvas
-  // height is the height of the canvas that you set in createCanvas
 }
 
 function keyPressed(){
