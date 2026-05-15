@@ -14,6 +14,7 @@ let selectingLobe = false;
 let regionButtons = [];
 let quicksandFont;
 let buttonOpacity;
+let selectedRegion;
 const DEFAULT_WIDTH = 1912;
 const DEFAULT_HEIGHT = 948;
 const BRAIN_STEM = 0;
@@ -57,7 +58,7 @@ class RegionButton{
   drawButton(opacity){
     stroke('white');
 
-    this.backgroundColorDeficit = this.detectHovering() ? 100 : 50;
+    this.backgroundColorDeficit = this.detectHovering() ? 100 : 70;
 
     fill(red(this.secondaryColor)-this.backgroundColorDeficit,green(this.secondaryColor)-this.backgroundColorDeficit,blue(this.secondaryColor)-this.backgroundColorDeficit,opacity);
     rect(this.x,this.y,this.buttonWidth,this.buttonHeight);
@@ -69,12 +70,7 @@ class RegionButton{
   }
 
   detectHovering(){
-    //use collide2d pointer rect
-    if (mouseY < this.y + this.buttonHeight){
-      console.log(this.y + this.buttonHeight,mouseY);
-      console.log('hi');
-    }
-    return mouseX > this.x && mouseX < this.x + this.buttonWidth && mouseY > this.y && mouseY < this.y + this.buttonHeight;
+    return this.x < mouseX-width/2 && this.y < mouseY-height/2 && this.x + this.buttonWidth > mouseX-width/2 && this.y + this.buttonHeight > mouseY- height/2;
   }
 
 }
@@ -101,7 +97,7 @@ function setup() {
 
   regionButtons.push(new RegionButton(60,350,'Brain Stem',0));
   regionButtons.push(new RegionButton(-578, 91, 'Cerebellum',1));
-  regionButtons.push(new RegionButton(-665, -187, 'Occippital Lobe',2));
+  regionButtons.push(new RegionButton(-665, -187, 'Occipital Lobe',2));
   regionButtons.push(new RegionButton(-220, -450, 'Parietal Lobe',3));
   regionButtons.push(new RegionButton(420, -355, 'Frontal Lobe',4));
   regionButtons.push(new RegionButton(130, 160, 'Temporal Lobe', 5));
@@ -201,5 +197,11 @@ function keyPressed(){
 }
 
 function mouseClicked(){
-  console.log(mouseX-width/2,mouseY-height/2);
+  if (selectingLobe){
+    for(let button of regionButtons){
+      if (button.detectHovering()){
+        selectedRegion = button.region;
+      }
+    }
+  }
 }
